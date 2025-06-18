@@ -1,0 +1,12 @@
+# General
+node_modules/
+.env
+.DS_Store
+
+# React
+client/dist
+client/.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
