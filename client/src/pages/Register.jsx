@@ -21,10 +21,17 @@ function Register() {
     e.preventDefault();
     try {
       const res = await API.post("/users/register", form);
-      localStorage.setItem("user", JSON.stringify(res.data));
+      const user = res.data;
+      localStorage.setItem("user", JSON.stringify(user));
       setMessage("Registration successful!");
-      setTimeout(() => navigate("/dashboard"), 1000);
+
+      if (user.role === "admin") {
+        navigate("/dashboard");
+      } else {
+        navigate("/items");
+      }
     } catch (err) {
+      console.error("Register error:", err);
       setMessage(err.response?.data?.error || "Registration failed");
     }
   };
@@ -36,12 +43,14 @@ function Register() {
         <input
           name="username"
           placeholder="Username"
+          value={form.username}
           onChange={handleChange}
           required
         />
         <input
           name="email"
           placeholder="Email"
+          value={form.email}
           onChange={handleChange}
           required
         />
@@ -49,10 +58,11 @@ function Register() {
           name="password"
           type="password"
           placeholder="Password"
+          value={form.password}
           onChange={handleChange}
           required
         />
-        <select name="role" onChange={handleChange}>
+        <select name="role" value={form.role} onChange={handleChange}>
           <option value="user">User</option>
           <option value="admin">Admin</option>
         </select>

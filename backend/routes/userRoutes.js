@@ -7,12 +7,15 @@ const {
   deleteUser,
   updateUser
 } = require('../controllers/userController');
-const { authorizeAdmin } = require('../middleware/auth');
+const { verifyToken, authorizeAdmin } = require('../middleware/auth');
 
+// Public routes
 router.post('/register', registerUser);
 router.post('/login', loginUser);
-router.get('/', authorizeAdmin, getAllUsers);
-router.delete('/:userId', authorizeAdmin, deleteUser);
-router.put('/:userId', authorizeAdmin, updateUser);
+
+// Admin-only routes
+router.get('/', verifyToken, authorizeAdmin, getAllUsers);
+router.delete('/:userId', verifyToken, authorizeAdmin, deleteUser);
+router.put('/:userId', verifyToken, authorizeAdmin, updateUser);
 
 module.exports = router;

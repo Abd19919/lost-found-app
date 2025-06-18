@@ -22,15 +22,15 @@ app.use('/api/users', userRoutes);
 
 // Health check route
 app.get('/', (req, res) => {
-  res.send('✅ Lost & Found API is running');
+  res.send('Lost & Found API is running');
 });
 
-// ✅ Safe catch-all for unmatched API routes
+// Safe catch-all for unmatched API routes
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`🚀 Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
